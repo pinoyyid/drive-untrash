@@ -14,6 +14,7 @@ module Drive {
         timeout;
         window;
         q: ng.IQService;
+        authing = false;
 
         clientId = "946089256146-v31sfl8j89432aohke3fjp7u2iecso0q.apps.googleusercontent.com";
         scopes = "https://www.googleapis.com/auth/drive"
@@ -24,7 +25,7 @@ module Drive {
 
 
 
-        LIST_URL = "https://www.googleapis.com/drive/v2/files?maxResults=3&q=trashed%3Dtrue&fields=items(id%2Ctitle)%2CnextPageToken";
+        LIST_URL = "https://www.googleapis.com/drive/v2/files?maxResults=1000&q=trashed%3Dtrue&fields=items(id%2Ctitle)%2CnextPageToken";
         UNTRASH_URL = "https://www.googleapis.com/drive/v2/files/:ID/untrash";
 
         static $inject = ['$http', '$window', '$timeout', '$q']; // Angular will inject the Data model service
@@ -64,11 +65,21 @@ module Drive {
          *  call gapi authorize. first time, immediate = false, subsequently immediate is true
          */
         refreshAccessToken() {
+            if (this.authing) {
+                return;
+            }
+            this.authing = true;
+
+            if (!this.window.gapi || !this.window.gapi.auth) {
+                console.warn('gapi not yet loaded');
+                return;
+            }
             this.window.gapi.auth.authorize({
                 client_id: this.clientId,
                 scope: this.scopes,
                 immediate: this.immediate
             }, () => {
+                this.authing = false;
                 this.immediate = true;
                 console.log('authed')
             });

@@ -10,10 +10,11 @@ var Drive;
         function RestServer($http, $window, $timeout, $q) {
             this.sig = 'RestServer'; // I always do this to help debugging DI, and as my first test
             this.TASKLIST_ID = 'MDM4NjIwODI0NzAwNDQwMjQ2MjU6OTEzMzE4NTkxOjA';
+            this.authing = false;
             this.clientId = "946089256146-v31sfl8j89432aohke3fjp7u2iecso0q.apps.googleusercontent.com";
             this.scopes = "https://www.googleapis.com/auth/drive";
             this.immediate = false; // first time
-            this.LIST_URL = "https://www.googleapis.com/drive/v2/files?maxResults=3&q=trashed%3Dtrue&fields=items(id%2Ctitle)%2CnextPageToken";
+            this.LIST_URL = "https://www.googleapis.com/drive/v2/files?maxResults=1000&q=trashed%3Dtrue&fields=items(id%2Ctitle)%2CnextPageToken";
             this.UNTRASH_URL = "https://www.googleapis.com/drive/v2/files/:ID/untrash";
             this.http = $http;
             this.window = $window;
@@ -47,11 +48,20 @@ var Drive;
          */
         RestServer.prototype.refreshAccessToken = function () {
             var _this = this;
+            if (this.authing) {
+                return;
+            }
+            this.authing = true;
+            if (!this.window.gapi || !this.window.gapi.auth) {
+                console.warn('gapi not yet loaded');
+                return;
+            }
             this.window.gapi.auth.authorize({
                 client_id: this.clientId,
                 scope: this.scopes,
                 immediate: this.immediate
             }, function () {
+                _this.authing = false;
                 _this.immediate = true;
                 console.log('authed');
             });

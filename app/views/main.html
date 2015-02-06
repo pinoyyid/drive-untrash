@@ -1,13 +1,20 @@
 <div>
-	<h1>Incomplete Todo Items</h1>
-	<pre>{{Zvmm|json}}</pre>
+	<h1>Google Drive Untrasher</h1>
+	<h2>This single page app will automatically (in fact it's probably already started) untrash all of your Google Drive files. 
+          First time through you will need to give it permission to access your files. Once you're done, you should totally go into your 
+          Google account settings at <a href="https://security.google.com/settings/security/permissions?pli=1">https://security.google.com/settings/security/permissions?pli=1</a> and revoke permission!</h2>
+
+        <div style="margin:1em; padding:1em; border: 1px solid grey">
         <div>Initial Trashed count = {{vmm.dm.initialTrashedCount}}</div>
         <div>Trashed count = {{vmm.dm.datamodel.allTrashedItemsArray.length}}</div>
         <div>Untrash In progress count = {{vmm.dm.datamodel.wipItemsArray.length}}</div>
         <div>Untrashed count = {{vmm.dm.datamodel.untrashedItemsArray.length}}</div>
 	<div ng-repeat="item in ZZvmm.dm.datamodel.allTrashedItemsArray">
+        </div>
 		<div>
 			{{ZZitem.title}}
 		</div>
 	</div>
+        <div>
+          <h3>This hasn't been tested with very large quantities of files, and access token refresh. If you find that it fails, simply reload the page to pick up where you left off.</h3></div>
 </div>
