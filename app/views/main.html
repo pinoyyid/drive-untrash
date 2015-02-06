@@ -1,0 +1,13 @@
+<div>
+	<h1>Incomplete Todo Items</h1>
+	<pre>{{Zvmm|json}}</pre>
+        <div>Initial Trashed count = {{vmm.dm.initialTrashedCount}}</div>
+        <div>Trashed count = {{vmm.dm.datamodel.allTrashedItemsArray.length}}</div>
+        <div>Untrash In progress count = {{vmm.dm.datamodel.wipItemsArray.length}}</div>
+        <div>Untrashed count = {{vmm.dm.datamodel.untrashedItemsArray.length}}</div>
+	<div ng-repeat="item in ZZvmm.dm.datamodel.allTrashedItemsArray">
+		<div>
+			{{ZZitem.title}}
+		</div>
+	</div>
+</div>

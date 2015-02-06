@@ -1,0 +1,30 @@
+<div>
+	<h1>Incomplete Todo Items</h1>
+	<pre>{{Zvmm|json}}</pre>
+	<div ng-repeat="todo in vmm.dm.getAllIncompleteTodos()">
+		<div>
+			<input type='checkbox' ng-click="vmm.todoClicked(todo)"/>
+			{{todo.title}}
+		</div>
+	</div>
+	<div>
+		<input type="text" placeholder="new Todo" ng-model="vmm.newTitle"/>
+		<button class="btn-primary btn-small"ng-click="vmm.newTodo()">Save</button>
+	</div>
+	
+	
+	
+	<h1>Completed Todo Items (tick to archive)</h1>
+	
+	<div>
+		<div>
+			<input type='checkbox'/>
+			This is a completed todo
+		</div>
+		<div>
+			<input type='checkbox'/>
+			This is a another completed todo
+		</div>
+	</div>
+	
+</div>
